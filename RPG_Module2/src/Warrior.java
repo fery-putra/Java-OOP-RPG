@@ -1,3 +1,9 @@
+
+// Encapsulation (public, protected, private), Method Overloading, Getter/Setter, Static
+
+import java.util.Scanner;
+
+// ==================== Warrior.java ====================
 public class Warrior {
     // ENCAPSULATION - Different access modifiers
     private String name;              // PRIVATE - only accessible within this class
@@ -161,3 +167,5 @@ public class Warrior {
                 " | Armor: " + armor);
     }
 }
+
+
