@@ -1,6 +1,6 @@
 class Paladin extends Combatant implements Magical, Defensive {
-    private static final int MAX_MANA = 60;  // STATIC FINAL
-    private final int ARMOR_VALUE = 20;      // FINAL
+    private static final int MAX_MANA = 60;
+    private final int ARMOR_VALUE = 20;
     private int mana;
     private boolean defending;
 
@@ -20,7 +20,6 @@ class Paladin extends Combatant implements Magical, Defensive {
         return CharacterClass.PALADIN;
     }
 
-    // Implement Magical interface
     @Override
     public int getMana() {
         return mana;
@@ -46,7 +45,6 @@ class Paladin extends Combatant implements Magical, Defensive {
         }
     }
 
-    // Implement Defensive interface
     @Override
     public void defend() {
         defending = true;

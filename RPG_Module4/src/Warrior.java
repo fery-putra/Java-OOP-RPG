@@ -1,5 +1,5 @@
 class Warrior extends Combatant implements Defensive {
-    private final int ARMOR_VALUE = 30; // FINAL variable
+    private final int ARMOR_VALUE = 30;
     private boolean defending;
 
     public Warrior(String name) {
@@ -25,7 +25,7 @@ class Warrior extends Combatant implements Defensive {
 
     @Override
     public int getArmor() {
-        return ARMOR_VALUE; // Return final variable
+        return ARMOR_VALUE;
     }
 
     @Override

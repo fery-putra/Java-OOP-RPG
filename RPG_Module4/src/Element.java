@@ -5,8 +5,8 @@ enum Element {
     HOLY(1.4, "Damages undead"),
     NONE(1.0, "No element");
 
-    private final double damageMultiplier; // FINAL
-    private final String effect;           // FINAL
+    private final double damageMultiplier;
+    private final String effect;
 
     Element(double damageMultiplier, String effect) {
         this.damageMultiplier = damageMultiplier;

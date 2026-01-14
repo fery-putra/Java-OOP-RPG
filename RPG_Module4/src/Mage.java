@@ -1,5 +1,5 @@
 class Mage extends Combatant implements Magical {
-    private static final int MAX_MANA = 100; // STATIC FINAL constant
+    private static final int MAX_MANA = 100;
     private int mana;
 
     public Mage(String name) {
@@ -45,6 +45,6 @@ class Mage extends Combatant implements Magical {
     @Override
     public void displayInfo() {
         super.displayInfo();
-        displayMana(); // Use default interface method
+        displayMana();
     }
 }

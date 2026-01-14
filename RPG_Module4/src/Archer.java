@@ -1,5 +1,5 @@
 class Archer extends Combatant {
-    private static final int MAX_ARROWS = 30; // STATIC FINAL
+    private static final int MAX_ARROWS = 30;
     private int arrows;
 
     public Archer(String name) {
