@@ -236,21 +236,85 @@ public enum CharacterClass {
 }
 ```
 
-### Using Enum:
+### Interactive Enum Demonstration:
 
 ```java
-// Get a value
-CharacterClass myClass = CharacterClass.WARRIOR;
+// USER INPUT - Show all enum values
+Scanner scanner = new Scanner(System.in);
 
-// Access attributes
-int damage = CharacterClass.WARRIOR.getBaseDamage();  // 20
-int health = CharacterClass.WARRIOR.getBaseHealth();  // 150
-
-// Get all values
+System.out.println("=== Character Classes ===");
+int index = 1;
 for (CharacterClass cc : CharacterClass.values()) {
-    System.out.println(cc);  // WARRIOR, MAGE, ARCHER
+    System.out.println(index + ". " + cc + " - " + 
+                      cc.getDescription() + 
+                      " (DMG: " + cc.getBaseDamage() + 
+                      ", HP: " + cc.getBaseHealth() + ")");
+    index++;
+}
+
+System.out.print("Choose your class (1-4): ");
+int choice = scanner.nextInt();
+scanner.nextLine();
+
+// Create character based on enum
+CharacterClass selectedClass = CharacterClass.values()[choice - 1];
+System.out.println("You chose: " + selectedClass);
+System.out.println("Base damage: " + selectedClass.getBaseDamage());
+System.out.println("Base health: " + selectedClass.getBaseHealth());
+
+// ENUM IN SWITCH CASE
+switch (selectedClass) {
+    case WARRIOR:
+        System.out.println("Strong melee fighter!");
+        player = new Warrior(name);
+        break;
+    case MAGE:
+        System.out.println("Powerful spellcaster!");
+        player = new Mage(name);
+        break;
+    case ARCHER:
+        System.out.println("Ranged attacker!");
+        player = new Archer(name);
+        break;
+    case PALADIN:
+        System.out.println("Holy knight!");
+        player = new Paladin(name);
+        break;
 }
 ```
+
+**Interactive Learning:** Students see all enum values and choose one!
+
+### Element Selection with Enum:
+
+```java
+// USER INPUT - Element selection
+System.out.println("Choose spell element:");
+System.out.println("1. FIRE (x1.5 damage)");
+System.out.println("2. ICE (x1.3 damage)");
+System.out.println("3. LIGHTNING (x1.8 damage)");
+System.out.println("4. HOLY (x1.4 damage)");
+System.out.print("Choice: ");
+int elemChoice = scanner.nextInt();
+
+Element element;
+switch (elemChoice) {  // ENUM IN SWITCH
+    case 1: element = Element.FIRE; break;
+    case 2: element = Element.ICE; break;
+    case 3: element = Element.LIGHTNING; break;
+    case 4: element = Element.HOLY; break;
+    default: element = Element.NONE; break;
+}
+
+System.out.println("You chose " + element + " - " + element.getEffect());
+System.out.println("Damage multiplier: x" + element.getDamageMultiplier());
+
+// Use the enum
+mage.castSpell(enemy, element);
+// Calculates: baseDamage * element.getDamageMultiplier()
+```
+
+**Enum Multipliers in Action:** Students see different damage outputs!
 
 ---
 
@@ -574,30 +638,95 @@ Warrior (child) ──────> Combatant (parent)
                Automatic
 ```
 
-### Why Automatic?
-
-Every Warrior IS a Combatant (has all Combatant methods), so it's safe!
-
-### Examples:
+### Interactive Polymorphism with Interfaces:
 
 ```java
-Warrior warrior = new Warrior("Thor");
-Mage mage = new Mage("Gandalf");
+// USER INPUT - Player turn with POLYMORPHISM
+System.out.println("--- Your Turn ---");
+System.out.println("1. Basic Attack");
+System.out.println("2. Special Action");
+System.out.print("Choose: ");
+int action = scanner.nextInt();
 
-// Upcasting to Combatant
-Combatant c1 = warrior;  // ✓ Automatic
-Combatant c2 = mage;     // ✓ Automatic
-
-// Upcasting to interface
-Magical m1 = mage;       // ✓ Automatic (Mage implements Magical)
-Defensive d1 = warrior;  // ✓ Automatic (Warrior implements Defensive)
-
-// Arrays with upcasting
-Combatant[] party = {
-    warrior,  // Upcasted to Combatant
-    mage      // Upcasted to Combatant
-};
+if (action == 2) {
+    // Check if player implements Magical interface
+    if (player instanceof Magical) {
+        // DOWNCAST to interface type
+        Magical caster = (Magical) player;
+        
+        // Now can access Magical methods
+        System.out.println("Current mana: " + caster.getMana());
+        
+        // Choose element (enum)
+        System.out.print("Choose element (1-4): ");
+        int elemChoice = scanner.nextInt();
+        Element elem = getElement(elemChoice);
+        
+        // Cast spell through interface
+        caster.castSpell(enemy, elem);
+        
+    } else if (player instanceof Defensive) {
+        // DOWNCAST to interface type
+        Defensive defender = (Defensive) player;
+        
+        // Access Defensive methods
+        System.out.println("Armor: " + defender.getArmor());
+        defender.defend();
+        
+    } else {
+        System.out.println("No special action available!");
+    }
+}
 ```
+
+**Polymorphism Made Interactive:** Students see different interfaces in action!
+
+### Upcasting and Downcasting Demonstration:
+
+```java
+// USER INPUT - Create character
+System.out.print("Create character (1=Warrior, 2=Mage): ");
+int type = scanner.nextInt();
+scanner.nextLine();
+
+System.out.print("Enter name: ");
+String name = scanner.nextLine();
+
+// Create specific type
+Warrior warrior = new Warrior(name);
+Mage mage = new Mage(name);
+
+// UPCASTING (automatic)
+Combatant c1 = warrior;  // Warrior → Combatant
+Combatant c2 = mage;     // Mage → Combatant
+
+System.out.println("Both are now Combatants!");
+c1.attack();  // Polymorphic call
+c2.attack();  // Polymorphic call
+
+// DOWNCASTING (manual with instanceof)
+System.out.println("\n=== Downcasting ===");
+if (c1 instanceof Warrior) {
+    Warrior w = (Warrior) c1;  // Safe downcast
+    System.out.println("✓ Downcast to Warrior");
+    System.out.println("  Armor: " + w.getArmor());
+}
+
+if (c2 instanceof Mage) {
+    Mage m = (Mage) c2;  // Safe downcast
+    System.out.println("✓ Downcast to Mage");
+    System.out.println("  Mana: " + m.getMana());
+}
+
+// UNSAFE DOWNCAST - demonstrates error
+if (c1 instanceof Mage) {
+    System.out.println("c1 is NOT a Mage!");
+} else {
+    System.out.println("Cannot downcast Warrior to Mage - different types!");
+}
+```
+
+**Casting Made Visual:** Students see safe vs unsafe casting!
 
 ---
 
