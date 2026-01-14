@@ -257,27 +257,45 @@ Warrior w = new Warrior("Thor");
 w.attack();  // Returns 20 - uses Warrior's version!
 ```
 
-### Rules for Overriding:
+### Interactive Battle Demonstrating Overriding:
 
-✓ **Same method signature** (name, parameters, return type)
 ```java
-// Parent
-public int attack() { }
+// USER INPUT - Battle turn
+System.out.println("--- Your Turn ---");
+System.out.println("1. Normal Attack");
+System.out.println("2. Special Action");
+System.out.print("Choose action: ");
+int action = scanner.nextInt();
 
-// Child - CORRECT
-@Override
-public int attack() { }  // ✓ Same signature
+if (action == 1) {
+    player.attack(enemy);  // OVERRIDDEN method
+    // Warrior: 20 damage + "slashes with great force!"
+    // Mage: 30 damage (if mana) + "casts fireball!"
+    // Archer: 25 damage (if aiming) + "perfect shot!"
+    
+} else if (action == 2) {
+    // DOWNCASTING to access special methods
+    if (player instanceof Warrior) {
+        Warrior w = (Warrior) player;
+        w.shieldBash(enemy);  // Only Warriors have this!
+        
+    } else if (player instanceof Mage) {
+        Mage m = (Mage) player;
+        System.out.print("Enter mana to restore: ");
+        int manaAmt = scanner.nextInt();
+        m.restoreMana(manaAmt);  // Only Mages have this!
+        
+    } else if (player instanceof Archer) {
+        Archer a = (Archer) player;
+        a.aim();  // Only Archers have this!
+        System.out.println("Next attack will be critical!");
+    }
+}
 ```
 
-✗ **Different signature = NOT overriding**
-```java
-// Parent
-public int attack() { }
+**Overriding Behavior Visible:** Each class type attacks differently!
 
-// Child - WRONG
-@Override
-public int attack(int x) { }  // ✗ Different parameters = NOT overriding
-```
+**Downcasting Made Clear:** Students see when and why to cast down!
 
 ✓ **Can call parent's method using super**
 ```java
