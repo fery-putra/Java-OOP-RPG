@@ -105,21 +105,81 @@ try {
 }
 ```
 
-### Execution Flow:
+### Interactive Exception Handling:
 
-**With error:**
-```
-1. try block starts
-2. Exception thrown
-3. catch block runs
-4. finally block runs ← Always
+```java
+// USER INPUT - Battle with exception handling
+Scanner scanner = new Scanner(System.in);
+
+System.out.println("Choose action:");
+System.out.println("1. Attack");
+System.out.println("2. Cast Spell");
+System.out.print("Choice: ");
+int action = scanner.nextInt();
+
+// TRY-CATCH-FINALLY demonstration
+try {
+    if (action == 1) {
+        hero.attack(enemy);
+        System.out.println("✓ Attack successful!");
+        
+    } else if (action == 2) {
+        System.out.print("Enter mana cost (10-50): ");
+        int manaCost = scanner.nextInt();
+        
+        hero.castSpell(enemy, manaCost);
+        System.out.println("✓ Spell cast successful!");
+    }
+    
+} catch (CharacterDeadException e) {
+    System.out.println("✗ Error: " + e.getMessage());
+    // Example: "Thor is dead and cannot attack!"
+    
+} catch (InvalidTargetException e) {
+    System.out.println("✗ Error: " + e.getMessage());
+    // Example: "Goblin is already dead!"
+    
+} catch (InsufficientManaException e) {
+    System.out.println("✗ Error: " + e.getMessage());
+    // Example: "Not enough mana! Need: 30, Have: 20"
+    
+} finally {
+    // ALWAYS executes
+    System.out.println("\n--- After Action ---");
+    hero.displayInfo();
+    enemy.displayInfo();
+}
 ```
 
-**Without error:**
+**Interactive Learning:** Students trigger different exceptions by their choices!
+
+### Scenario Examples:
+
+**Scenario 1 - Success:**
 ```
-1. try block runs completely
-2. catch block skipped
-3. finally block runs ← Always
+User chooses: Attack
+Hero is alive, enemy is alive
+Output: ✓ Attack successful!
+Finally block runs: Shows stats
+```
+
+**Scenario 2 - Dead Attacker:**
+```
+User chooses: Attack
+Hero is dead
+Throws: CharacterDeadException
+Catch block runs: ✗ Error: Thor is dead!
+Finally block runs: Shows stats
+```
+
+**Scenario 3 - Not Enough Mana:**
+```
+User chooses: Cast Spell
+User enters: 50 (mana cost)
+Hero only has: 20 mana
+Throws: InsufficientManaException
+Catch block runs: ✗ Error: Not enough mana!
+Finally block runs: Shows stats
 ```
 
 ### Why Use Finally?
@@ -472,21 +532,82 @@ public int getSize() {
 }
 ```
 
-### Usage:
+### Interactive ArrayList Operations:
 
 ```java
-ArrayList<Character> members = new ArrayList<>();
-System.out.println(members.size());  // 0
+// USER INPUT - Party Management Menu
+Scanner scanner = new Scanner(System.in);
+Party party = new Party("Heroes", 3);
 
-members.add(warrior);
-System.out.println(members.size());  // 1
+System.out.println("=== Party Management ===");
+System.out.println("1. Add Member (ArrayList.add)");
+System.out.println("2. Remove Member (ArrayList.remove)");
+System.out.println("3. View Member (ArrayList.get)");
+System.out.println("4. Replace Member (ArrayList.set)");
+System.out.println("5. Check Size (ArrayList.size)");
+System.out.println("6. Check Empty (ArrayList.isEmpty)");
+System.out.print("Choice: ");
+int choice = scanner.nextInt();
+scanner.nextLine();
 
-members.add(mage);
-System.out.println(members.size());  // 2
-
-members.remove(0);
-System.out.println(members.size());  // 1
+try {
+    switch (choice) {
+        case 1:  // ADD
+            System.out.print("Enter name: ");
+            String name = scanner.nextLine();
+            System.out.print("Enter health: ");
+            int health = scanner.nextInt();
+            System.out.print("Enter mana: ");
+            int mana = scanner.nextInt();
+            
+            Character newChar = new Character(name, health, mana);
+            party.addMember(newChar);  // ArrayList.add()
+            System.out.println("✓ Added! Size: " + party.getSize());
+            break;
+            
+        case 2:  // REMOVE
+            party.displayParty();
+            System.out.print("Enter index (1-" + party.getSize() + "): ");
+            int index = scanner.nextInt() - 1;
+            party.removeMemberAt(index);  // ArrayList.remove()
+            System.out.println("✓ Removed! New size: " + party.getSize());
+            break;
+            
+        case 3:  // GET
+            System.out.print("Enter index to view: ");
+            int viewIndex = scanner.nextInt() - 1;
+            Character c = party.getMemberAt(viewIndex);  // ArrayList.get()
+            if (c != null) {
+                c.displayInfo();
+            }
+            break;
+            
+        case 4:  // SET
+            System.out.print("Enter index to replace: ");
+            int replaceIndex = scanner.nextInt() - 1;
+            scanner.nextLine();
+            System.out.print("Enter new character name: ");
+            String newName = scanner.nextLine();
+            Character replacement = new Character(newName, 100, 80);
+            party.replaceMember(replaceIndex, replacement);  // ArrayList.set()
+            System.out.println("✓ Replaced!");
+            break;
+            
+        case 5:  // SIZE
+            System.out.println("Party size: " + party.getSize());
+            break;
+            
+        case 6:  // ISEMPTY
+            System.out.println("Is empty: " + party.isEmpty());
+            break;
+    }
+    
+} catch (InventoryFullException e) {
+    System.out.println("✗ " + e.getMessage());
+}
 ```
+
+**All ArrayList Methods Interactive:** Students choose which operation to test!
 
 ---
 
@@ -619,45 +740,101 @@ public void displayParty() {
 }
 ```
 
-### Examples:
+### Interactive Iterator Demonstration:
 
-**Searching:**
 ```java
-public Character findMember(String name) {
-    for (Character c : members) {  // Enhanced for
-        if (c.getName().equals(name)) {
-            return c;
-        }
+// USER INPUT - Remove member by name using Iterator
+party.displayParty();
+
+System.out.print("Enter name to remove: ");
+String removeName = scanner.nextLine();
+
+// Using Iterator for SAFE removal
+Iterator<Character> iterator = members.iterator();
+boolean found = false;
+
+while (iterator.hasNext()) {
+    Character c = iterator.next();
+    
+    if (c.getName().equals(removeName)) {
+        iterator.remove();  // Safe removal during iteration
+        System.out.println("✓ Removed: " + removeName);
+        found = true;
+        break;
     }
-    return null;
+}
+
+if (!found) {
+    System.out.println("✗ Not found: " + removeName);
+}
+
+party.displayParty();  // Show updated list
+```
+
+**Why Iterator?** Cannot use enhanced for loop to remove!
+
+```java
+// DON'T DO THIS - Will crash!
+for (Character c : members) {
+    if (c.getName().equals("Gandalf")) {
+        members.remove(c);  // ✗ ConcurrentModificationException!
+    }
+}
+
+// DO THIS - Use Iterator
+Iterator<Character> it = members.iterator();
+while (it.hasNext()) {
+    Character c = it.next();
+    if (c.getName().equals("Gandalf")) {
+        it.remove();  // ✓ Safe!
+    }
 }
 ```
 
-**Filtering:**
+### Interactive Enhanced For Loop:
+
 ```java
-public ArrayList<Character> getAliveMembers() {
-    ArrayList<Character> alive = new ArrayList<>();
+// USER INPUT - Filter and display alive members
+System.out.println("Show alive members only? (yes/no): ");
+String filter = scanner.nextLine();
+
+if (filter.equalsIgnoreCase("yes")) {
+    System.out.println("\n=== Alive Members ===");
     
-    for (Character c : members) {  // Enhanced for
+    // ENHANCED FOR LOOP - filtering
+    for (Character c : members) {
         if (c.isAlive()) {
-            alive.add(c);
+            c.displayInfo();
         }
     }
-    return alive;
+    
+} else {
+    System.out.println("\n=== All Members ===");
+    
+    // ENHANCED FOR LOOP - display all
+    int index = 1;
+    for (Character c : members) {
+        System.out.print(index + ". ");
+        c.displayInfo();
+        index++;
+    }
 }
+
+// ENHANCED FOR LOOP - Calculate total
+System.out.println("\nCalculating total health...");
+int total = 0;
+for (Character c : members) {
+    total += c.getHealth();
+}
+System.out.println("Total party health: " + total);
 ```
 
-**Summing:**
-```java
-public int getTotalHealth() {
-    int total = 0;
-    
-    for (Character c : members) {  // Enhanced for
-        total += c.getHealth();
-    }
-    return total;
-}
-```
+**Enhanced For Loop Uses:**
+- ✓ Display all items
+- ✓ Filter items (alive members)
+- ✓ Sum values (total health)
+- ✓ Search for items
+- ✗ Cannot remove items (use Iterator)
 
 **Displaying with counter:**
 ```java
