@@ -55,45 +55,59 @@ System.out.println(warrior.getName());  // OK! Using getter
 warrior.setName("Thor");                // OK! Using setter
 ```
 
-### Why Use Private?
+### Interactive Validation Example:
 
-**Without encapsulation (bad):**
 ```java
-public class Warrior {
-    public int health;
-    public int maxHealth;
-}
+// USER INPUT with validation
+System.out.print("Set armor for warrior (0-50): ");
+int armorValue = scanner.nextInt();
+warrior.setArmor(armorValue);  // Validates automatically
 
-// In main:
-Warrior w = new Warrior();
-w.health = 999999;     // Cheating! Can set any value
-w.maxHealth = -50;     // Nonsense! Negative max health
+// If user enters 70:
+// Output: "Error: Armor must be between 0 and 50!"
+
+// If user enters 30:
+// Output: "Warrior's armor set to 30"
 ```
 
-**With encapsulation (good):**
-```java
-public class Warrior {
-    private int health;
-    private int maxHealth;
-    
-    public void setHealth(int health) {
-        if (health > maxHealth) {
-            this.health = maxHealth;  // Can't exceed max
-        } else if (health < 0) {
-            this.health = 0;          // Can't be negative
-        } else {
-            this.health = health;
-        }
-    }
-}
+**Why This Matters:** Students instantly see validation in action!
 
-// In main:
-Warrior w = new Warrior();
-w.setHealth(999999);   // Automatically corrected to maxHealth
-w.setHealth(-50);      // Automatically set to 0
+### Interactive Party Creation:
+
+```java
+// USER INPUT - Party with method overloading
+System.out.print("Enter party name: ");
+String partyName = scanner.nextLine();
+Party party = new Party(partyName);
+
+System.out.println("Add member:");
+System.out.println("1. Add existing warrior");
+System.out.println("2. Create warrior with name");
+System.out.println("3. Create warrior with name + armor");
+System.out.print("Choice: ");
+int choice = scanner.nextInt();
+scanner.nextLine();
+
+switch (choice) {
+    case 1:
+        party.addWarrior(warrior1);  // Method version 1
+        break;
+    case 2:
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+        party.addWarrior(name);  // Method version 2
+        break;
+    case 3:
+        System.out.print("Enter name: ");
+        String name2 = scanner.nextLine();
+        System.out.print("Enter armor: ");
+        int armor = scanner.nextInt();
+        party.addWarrior(name2, armor);  // Method version 3
+        break;
+}
 ```
 
-**Benefit:** Data is VALIDATED before being set!
+**Method Overloading Made Clear:** Students choose which version to call!
 
 ---
 
