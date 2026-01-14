@@ -1,10 +1,6 @@
-// MODULE 5: COMPLETE SOLUTION - PART 2/2
-// Inventory class and Game class with all ArrayList methods demonstrated
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
-// ==================== Inventory.java - All ArrayList Methods ====================
 class Inventory {
     private ArrayList<Item> items;
     private int maxCapacity;
@@ -12,40 +8,40 @@ class Inventory {
 
     public Inventory(int maxCapacity) {
         this.maxCapacity = maxCapacity;
-        this.items = new ArrayList<Item>(); // Create ArrayList
+        this.items = new ArrayList<Item>();
         this.gold = 100;
     }
 
-    // ArrayList: ADD method
+    // ArrayList: ADD
     public void addItem(Item item) throws InventoryFullException {
-        if (items.size() >= maxCapacity) { // SIZE
+        if (items.size() >= maxCapacity) {
             throw new InventoryFullException("Inventory full! Max: " + maxCapacity);
         }
-        items.add(item); // ADD
+        items.add(item);
         System.out.println("Added " + item.getName() + " to inventory");
     }
 
-    // ArrayList: GET method
+    // ArrayList: GET
     public Item getItem(int index) {
         if (index >= 0 && index < items.size()) {
-            return items.get(index); // GET
+            return items.get(index);
         }
         return null;
     }
 
-    // ArrayList: SET method
+    // ArrayList: SET
     public void replaceItem(int index, Item newItem) {
         if (index >= 0 && index < items.size()) {
             Item old = items.get(index);
-            items.set(index, newItem); // SET
+            items.set(index, newItem);
             System.out.println("Replaced " + old.getName() + " with " + newItem.getName());
         }
     }
 
-    // ArrayList: REMOVE method (by index)
+    // ArrayList: REMOVE by index
     public Item removeItemAt(int index) {
         if (index >= 0 && index < items.size()) {
-            return items.remove(index); // REMOVE by index
+            return items.remove(index);
         }
         return null;
     }
@@ -55,25 +51,25 @@ class Inventory {
         Iterator<Item> iterator = items.iterator();
         while (iterator.hasNext()) {
             Item item = iterator.next();
-            if (item.getName().equals(itemName)) {
-                iterator.remove(); // ITERATOR remove
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                iterator.remove();
                 return item;
             }
         }
         return null;
     }
 
-    // ArrayList: SIZE method
+    // ArrayList: SIZE
     public int getItemCount() {
-        return items.size(); // SIZE
+        return items.size();
     }
 
-    // ArrayList: ISEMPTY method
+    // ArrayList: ISEMPTY
     public boolean isEmpty() {
-        return items.isEmpty(); // ISEMPTY
+        return items.isEmpty();
     }
 
-    // ENHANCED FOR LOOP with counter
+    // ENHANCED FOR with counter
     public void displayInventory() {
         System.out.println("\n--- Inventory ---");
         System.out.println("Gold: " + gold);
@@ -84,33 +80,33 @@ class Inventory {
         }
 
         int index = 1;
-        for (Item item : items) { // ENHANCED FOR LOOP
+        for (Item item : items) {
             System.out.println(index + ". " + item.toString());
             index++;
         }
         System.out.println("Items: " + getItemCount() + "/" + maxCapacity);
     }
 
-    // ENHANCED FOR LOOP: Sum values
+    // ENHANCED FOR: Sum values
     public int getTotalValue() {
         int total = gold;
-        for (Item item : items) { // ENHANCED FOR LOOP
+        for (Item item : items) {
             total += item.getValue();
         }
         return total;
     }
 
-    // ENHANCED FOR LOOP: Search
+    // ENHANCED FOR: Search
     public boolean hasItem(String itemName) {
-        for (Item item : items) { // ENHANCED FOR LOOP
-            if (item.getName().equals(itemName)) {
+        for (Item item : items) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
                 return true;
             }
         }
         return false;
     }
 
-    // TRY-CATCH: Use item with exception handling
+    // Try-catch: Use item
     public void useItem(String itemName, Character target) throws Exception {
         Item item = removeItem(itemName);
 
@@ -123,7 +119,7 @@ class Inventory {
                 target.heal(50);
             } catch (CharacterDeadException e) {
                 System.out.println("Cannot use potion: " + e.getMessage());
-                items.add(item); // Add back if failed
+                items.add(item);
                 return;
             }
         }
@@ -134,8 +130,3 @@ class Inventory {
     public int getGold() { return gold; }
     public void addGold(int amount) { gold += amount; }
 }
-
-// ==================== BattleManager.java - Exception Handling ====================
-
-
-// ==================== Game.java ====================

@@ -1,163 +1,331 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class Game {
+    private static Scanner scanner = new Scanner(System.in);
+    private static Party party;
+    private static Inventory inventory;
+
     public static void main(String[] args) {
         System.out.println("=== RPG Game - Module 5 ===");
-        System.out.println("Learn: Exception Handling, ArrayList Methods, Iterator, Enhanced For\n");
+        System.out.println("Learn: Exception Handling, ArrayList, Iterator, Enhanced For\n");
 
-        // Create characters
-        Character warrior = new Character("Conan", 150, 50);
-        Character mage = new Character("Merlin", 100, 120);
-        Character cleric = new Character("Anna", 110, 100);
+        // Setup party with INPUT
+        System.out.print("Enter party name: ");
+        String partyName = scanner.nextLine();
 
-        // ========== ARRAYLIST METHODS ==========
-        System.out.println("=== ArrayList Methods Demo ===\n");
+        System.out.print("Enter max party size (2-5): ");
+        int maxSize = scanner.nextInt();
+        scanner.nextLine();
 
-        // Create Party - uses ArrayList
-        Party party = new Party("Heroes", 3);
+        party = new Party(partyName, maxSize);
+        inventory = new Inventory(10);
 
-        // Method: ADD and SIZE
+        System.out.println("\n✓ Party '" + partyName + "' created with max size: " + maxSize);
+
+        // Main game loop
+        boolean playing = true;
+        while (playing) {
+            System.out.println("\n╔════════════════════════════════╗");
+            System.out.println("║         MAIN MENU              ║");
+            System.out.println("╚════════════════════════════════╝");
+            System.out.println("1. Party Management");
+            System.out.println("2. Inventory Management");
+            System.out.println("3. Battle System");
+            System.out.println("4. View Status");
+            System.out.println("5. Exit");
+            System.out.print("Choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    partyManagement();
+                    break;
+                case 2:
+                    inventoryManagement();
+                    break;
+                case 3:
+                    battleSystem();
+                    break;
+                case 4:
+                    viewStatus();
+                    break;
+                case 5:
+                    playing = false;
+                    System.out.println("\nThanks for playing!");
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+
+        scanner.close();
+    }
+
+    // Party Management with ArrayList methods
+    private static void partyManagement() {
+        System.out.println("\n=== Party Management ===");
+        System.out.println("1. Add Member (ArrayList.add)");
+        System.out.println("2. Remove Member by Index (ArrayList.remove)");
+        System.out.println("3. Remove Member by Name (Iterator)");
+        System.out.println("4. View Member (ArrayList.get)");
+        System.out.println("5. Replace Member (ArrayList.set)");
+        System.out.println("6. Display Party");
+        System.out.print("Choice: ");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
         try {
-            System.out.println("-- ADD Method --");
-            party.addMember(warrior);    // add()
-            party.addMember(mage);       // add()
-            party.addMember(cleric);     // add()
-            System.out.println("Party size: " + party.getSize()); // size()
+            switch (choice) {
+                case 1: // ADD
+                    System.out.print("Enter character name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter max health (50-200): ");
+                    int health = scanner.nextInt();
+                    System.out.print("Enter max mana (30-150): ");
+                    int mana = scanner.nextInt();
+                    scanner.nextLine();
 
-            // Try to exceed capacity
-            Character extra = new Character("Extra", 100, 50);
-            party.addMember(extra); // Should throw exception
+                    Character newChar = new Character(name, health, mana);
+                    party.addMember(newChar); // May throw InventoryFullException
+                    break;
 
+                case 2: // REMOVE by index
+                    party.displayParty();
+                    System.out.print("Enter index to remove (1-" + party.getSize() + "): ");
+                    int index = scanner.nextInt() - 1;
+                    party.removeMemberAt(index);
+                    break;
+
+                case 3: // REMOVE with Iterator
+                    party.displayParty();
+                    System.out.print("Enter name to remove: ");
+                    String removeName = scanner.nextLine();
+                    boolean removed = party.removeMember(removeName);
+                    if (!removed) {
+                        System.out.println(removeName + " not found!");
+                    }
+                    break;
+
+                case 4: // GET
+                    party.displayParty();
+                    System.out.print("Enter index to view (1-" + party.getSize() + "): ");
+                    int viewIndex = scanner.nextInt() - 1;
+                    Character c = party.getMemberAt(viewIndex);
+                    if (c != null) {
+                        c.displayInfo();
+                    } else {
+                        System.out.println("Invalid index!");
+                    }
+                    break;
+
+                case 5: // SET
+                    party.displayParty();
+                    System.out.print("Enter index to replace (1-" + party.getSize() + "): ");
+                    int replaceIndex = scanner.nextInt() - 1;
+                    scanner.nextLine();
+
+                    System.out.print("Enter new character name: ");
+                    String newName = scanner.nextLine();
+                    Character replacement = new Character(newName, 100, 80);
+                    party.replaceMember(replaceIndex, replacement);
+                    break;
+
+                case 6:
+                    party.displayParty();
+                    System.out.println("\nTotal Health: " + party.getTotalHealth());
+                    System.out.println("Is Empty: " + party.isEmpty());
+                    System.out.println("Size: " + party.getSize());
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
         } catch (InventoryFullException e) {
-            System.out.println("✗ " + e.getMessage());
+            System.out.println("✗ Error: " + e.getMessage());
         }
+    }
 
-        // Method: GET
-        System.out.println("\n-- GET Method --");
-        Character first = party.getMemberAt(0); // get(0)
-        if (first != null) {
-            System.out.println("First member: " + first.getName());
-        }
+    // Inventory Management with ArrayList methods
+    private static void inventoryManagement() {
+        System.out.println("\n=== Inventory Management ===");
+        System.out.println("1. Add Item (ArrayList.add)");
+        System.out.println("2. Remove Item (Iterator)");
+        System.out.println("3. Use Item (Exception Handling)");
+        System.out.println("4. View Item (ArrayList.get)");
+        System.out.println("5. Replace Item (ArrayList.set)");
+        System.out.println("6. Display Inventory");
+        System.out.print("Choice: ");
 
-        // Method: SET
-        System.out.println("\n-- SET Method --");
-        Character replacement = new Character("Aragorn", 140, 60);
-        party.replaceMember(1, replacement); // set(1, newMember)
-
-        // Method: ISEMPTY
-        System.out.println("\n-- ISEMPTY Method --");
-        System.out.println("Is party empty? " + party.isEmpty()); // isEmpty()
-
-        party.displayParty();
-
-        // ========== ITERATOR ==========
-        System.out.println("\n=== Iterator Demo ===");
-        System.out.println("-- Removing member with Iterator --");
-        party.removeMember("Aragorn"); // Uses Iterator for safe removal
-        party.displayParty();
-
-        // ========== ENHANCED FOR LOOP ==========
-        System.out.println("\n=== Enhanced For Loop Demo ===");
-
-        // Find member
-        System.out.println("-- Searching with Enhanced For --");
-        Character found = party.findMember("Conan");
-        if (found != null) {
-            System.out.println("Found: " + found.getName());
-        }
-
-        // Get alive members
-        System.out.println("\n-- Filtering with Enhanced For --");
-        ArrayList<Character> alive = party.getAliveMembers();
-        System.out.println("Alive members: " + alive.size());
-        for (Character c : alive) {
-            System.out.println("  " + c.getName());
-        }
-
-        // Sum health
-        System.out.println("\n-- Summing with Enhanced For --");
-        System.out.println("Total party health: " + party.getTotalHealth());
-
-        // ========== INVENTORY - All ArrayList Methods ==========
-        System.out.println("\n=== Inventory (ArrayList Methods) ===");
-        Inventory inventory = new Inventory(5);
+        int choice = scanner.nextInt();
+        scanner.nextLine();
 
         try {
-            // ADD
-            inventory.addItem(new Item("Health Potion", 50));
-            inventory.addItem(new Item("Mana Potion", 40));
-            inventory.addItem(new Item("Sword", 200));
+            switch (choice) {
+                case 1: // ADD
+                    System.out.print("Enter item name: ");
+                    String itemName = scanner.nextLine();
+                    System.out.print("Enter item value: ");
+                    int value = scanner.nextInt();
+                    scanner.nextLine();
 
-            // GET
-            Item firstItem = inventory.getItem(0);
-            System.out.println("First item: " + firstItem);
+                    Item item = new Item(itemName, value);
+                    inventory.addItem(item); // May throw InventoryFullException
+                    break;
 
-            // SIZE and ISEMPTY
-            System.out.println("Item count: " + inventory.getItemCount());
-            System.out.println("Is empty? " + inventory.isEmpty());
+                case 2: // REMOVE with Iterator
+                    inventory.displayInventory();
+                    System.out.print("Enter item name to remove: ");
+                    String removeName = scanner.nextLine();
+                    Item removed = inventory.removeItem(removeName);
+                    if (removed != null) {
+                        System.out.println("Removed: " + removed);
+                    } else {
+                        System.out.println("Item not found!");
+                    }
+                    break;
 
-            inventory.displayInventory();
+                case 3: // USE with exception handling
+                    if (party.isEmpty()) {
+                        System.out.println("No party members to use item on!");
+                        break;
+                    }
 
-            // Enhanced For: Total value
-            System.out.println("\nTotal value: " + inventory.getTotalValue() + "g");
+                    inventory.displayInventory();
+                    System.out.print("Enter item name to use: ");
+                    String useName = scanner.nextLine();
 
-            // SET - Replace item
-            System.out.println("\n-- SET Method --");
-            inventory.replaceItem(1, new Item("Super Potion", 80));
-            inventory.displayInventory();
+                    party.displayParty();
+                    System.out.print("Choose target (1-" + party.getSize() + "): ");
+                    int targetIndex = scanner.nextInt() - 1;
+                    scanner.nextLine();
 
-            // REMOVE by index
-            System.out.println("\n-- REMOVE Method (by index) --");
-            Item removed = inventory.removeItemAt(2);
-            System.out.println("Removed: " + removed);
-            inventory.displayInventory();
+                    Character target = party.getMemberAt(targetIndex);
+                    if (target != null) {
+                        inventory.useItem(useName, target);
+                    }
+                    break;
 
+                case 4: // GET
+                    inventory.displayInventory();
+                    System.out.print("Enter index to view (1-" + inventory.getItemCount() + "): ");
+                    int viewIndex = scanner.nextInt() - 1;
+                    Item viewItem = inventory.getItem(viewIndex);
+                    if (viewItem != null) {
+                        System.out.println(viewItem);
+                    } else {
+                        System.out.println("Invalid index!");
+                    }
+                    break;
+
+                case 5: // SET
+                    inventory.displayInventory();
+                    System.out.print("Enter index to replace (1-" + inventory.getItemCount() + "): ");
+                    int replaceIndex = scanner.nextInt() - 1;
+                    scanner.nextLine();
+
+                    System.out.print("Enter new item name: ");
+                    String newName = scanner.nextLine();
+                    System.out.print("Enter new item value: ");
+                    int newValue = scanner.nextInt();
+                    scanner.nextLine();
+
+                    Item newItem = new Item(newName, newValue);
+                    inventory.replaceItem(replaceIndex, newItem);
+                    break;
+
+                case 6:
+                    inventory.displayInventory();
+                    System.out.println("\nTotal Value: " + inventory.getTotalValue() + "g");
+                    System.out.println("Is Empty: " + inventory.isEmpty());
+                    System.out.println("Item Count: " + inventory.getItemCount());
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        } catch (InventoryFullException e) {
+            System.out.println("✗ Error: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("✗ Error: " + e.getMessage());
+        }
+    }
+
+    // Battle System with Exception Handling
+    private static void battleSystem() {
+        if (party.getSize() < 2) {
+            System.out.println("Need at least 2 party members to battle!");
+            return;
         }
 
-        // ========== EXCEPTION HANDLING ==========
-        System.out.println("\n=== Exception Handling Demo ===");
+        ArrayList<Character> alive = party.getAliveMembers();
+        if (alive.size() < 2) {
+            System.out.println("Need at least 2 alive members to battle!");
+            return;
+        }
 
-        // TRY-CATCH: Normal attack
-        BattleManager.executeBattle(warrior, mage);
+        System.out.println("\n=== Battle System ===");
+        party.displayParty();
 
-        // TRY-CATCH: Spell with enough mana
-        BattleManager.executeSpellCast(mage, warrior, 30);
+        System.out.print("\nChoose attacker (1-" + party.getSize() + "): ");
+        int attackerIndex = scanner.nextInt() - 1;
 
-        // TRY-CATCH: Spell without enough mana (throws exception)
-        BattleManager.executeSpellCast(mage, warrior, 150);
+        System.out.print("Choose defender (1-" + party.getSize() + "): ");
+        int defenderIndex = scanner.nextInt() - 1;
+        scanner.nextLine();
 
-        // Create dead character to test exceptions
-        System.out.println("\n--- Testing Dead Character Exceptions ---");
-        mage.takeDamage(200); // Kill mage
+        Character attacker = party.getMemberAt(attackerIndex);
+        Character defender = party.getMemberAt(defenderIndex);
 
-        // TRY-CATCH: Dead attacker
-        BattleManager.executeBattle(mage, warrior);
+        if (attacker == null || defender == null) {
+            System.out.println("Invalid character selection!");
+            return;
+        }
 
-        // TRY-CATCH: Dead target
-        BattleManager.executeBattle(warrior, mage);
+        System.out.println("\n1. Basic Attack");
+        System.out.println("2. Cast Spell");
+        System.out.print("Choice: ");
+        int actionChoice = scanner.nextInt();
+        scanner.nextLine();
 
-        // TRY-CATCH: Heal dead character
-        BattleManager.attemptHealing(mage, 50);
+        // TRY-CATCH-FINALLY demonstration
+        try {
+            if (actionChoice == 1) {
+                attacker.attack(defender);
+                System.out.println("✓ Attack successful!");
+            } else if (actionChoice == 2) {
+                System.out.print("Enter mana cost (10-50): ");
+                int manaCost = scanner.nextInt();
+                scanner.nextLine();
 
-        // ========== ITERATOR - Remove from Inventory ==========
-        System.out.println("\n=== Iterator - Remove Item ===");
+                attacker.castSpell(defender, manaCost);
+                System.out.println("✓ Spell cast successful!");
+            }
+        } catch (CharacterDeadException e) {
+            System.out.println("✗ " + e.getMessage());
+        } catch (InvalidTargetException e) {
+            System.out.println("✗ " + e.getMessage());
+        } catch (InsufficientManaException e) {
+            System.out.println("✗ " + e.getMessage());
+        } finally {
+            System.out.println("\n--- After Action ---");
+            attacker.displayInfo();
+            defender.displayInfo();
+        }
+    }
+
+    // View Status
+    private static void viewStatus() {
+        System.out.println("\n=== Current Status ===");
+        party.displayParty();
         inventory.displayInventory();
-        Item removedItem = inventory.removeItem("Health Potion");
-        System.out.println("Removed with Iterator: " + removedItem);
-        inventory.displayInventory();
 
-        // ========== ENHANCED FOR - Search ==========
-        System.out.println("\n=== Enhanced For - Search ===");
-        System.out.println("Has Super Potion? " + inventory.hasItem("Super Potion"));
-        System.out.println("Has Magic Scroll? " + inventory.hasItem("Magic Scroll"));
-
-        // Final Summary
-        System.out.println("\n=== Final Summary ===");
-        System.out.println("Party members: " + party.getSize());
-        System.out.println("Total party health: " + party.getTotalHealth());
-        System.out.println("Inventory items: " + inventory.getItemCount());
-        System.out.println("Inventory empty? " + inventory.isEmpty());
+        System.out.println("\n--- Statistics ---");
+        System.out.println("Total Party Health: " + party.getTotalHealth());
+        System.out.println("Alive Members: " + party.getAliveMembers().size());
+        System.out.println("Total Inventory Value: " + inventory.getTotalValue() + "g");
     }
 }

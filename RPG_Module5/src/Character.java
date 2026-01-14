@@ -23,25 +23,20 @@ class Character {
         return health > 0;
     }
 
-    // Method with TRY-CATCH and THROWS
     public void attack(Character target) throws CharacterDeadException, InvalidTargetException {
-        // Check if attacker is alive
         if (!this.isAlive()) {
             throw new CharacterDeadException(name + " is dead and cannot attack!");
         }
 
-        // Check if target is alive
         if (!target.isAlive()) {
             throw new InvalidTargetException(target.getName() + " is already dead!");
         }
 
-        // Execute attack
         int damage = 15;
         target.takeDamage(damage);
         System.out.println(name + " attacks " + target.getName() + " for " + damage + " damage!");
     }
 
-    // Method with multiple exception types
     public void castSpell(Character target, int manaCost)
             throws CharacterDeadException, InvalidTargetException, InsufficientManaException {
 
@@ -57,14 +52,12 @@ class Character {
             throw new InsufficientManaException("Not enough mana! Need: " + manaCost + ", Have: " + mana);
         }
 
-        // Cast spell
         mana -= manaCost;
         int damage = manaCost * 2;
         target.takeDamage(damage);
         System.out.println(name + " casts spell on " + target.getName() + " for " + damage + " damage!");
     }
 
-    // Method with exception
     public void heal(int amount) throws CharacterDeadException {
         if (!isAlive()) {
             throw new CharacterDeadException("Cannot heal " + name + " - already dead!");

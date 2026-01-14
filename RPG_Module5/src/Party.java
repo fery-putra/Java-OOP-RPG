@@ -9,40 +9,40 @@ class Party {
     public Party(String partyName, int maxSize) {
         this.partyName = partyName;
         this.maxSize = maxSize;
-        this.members = new ArrayList<Character>(); // Create ArrayList
+        this.members = new ArrayList<Character>();
     }
 
-    // ArrayList method: ADD
+    // ArrayList: ADD
     public void addMember(Character character) throws InventoryFullException {
-        if (members.size() >= maxSize) { // SIZE method
+        if (members.size() >= maxSize) {
             throw new InventoryFullException("Party full! Max: " + maxSize);
         }
 
-        members.add(character); // ADD method
+        members.add(character);
         System.out.println(character.getName() + " joined the party!");
     }
 
-    // ArrayList method: GET
+    // ArrayList: GET
     public Character getMemberAt(int index) {
         if (index >= 0 && index < members.size()) {
-            return members.get(index); // GET method
+            return members.get(index);
         }
         return null;
     }
 
-    // ArrayList method: SET
+    // ArrayList: SET
     public void replaceMember(int index, Character newCharacter) {
         if (index >= 0 && index < members.size()) {
             Character old = members.get(index);
-            members.set(index, newCharacter); // SET method
+            members.set(index, newCharacter);
             System.out.println(old.getName() + " replaced by " + newCharacter.getName());
         }
     }
 
-    // ArrayList method: REMOVE
+    // ArrayList: REMOVE by index
     public boolean removeMemberAt(int index) {
         if (index >= 0 && index < members.size()) {
-            Character removed = members.remove(index); // REMOVE by index
+            Character removed = members.remove(index);
             System.out.println(removed.getName() + " left the party!");
             return true;
         }
@@ -51,11 +51,11 @@ class Party {
 
     // ITERATOR - safe removal
     public boolean removeMember(String characterName) {
-        Iterator<Character> iterator = members.iterator(); // ITERATOR
+        Iterator<Character> iterator = members.iterator();
         while (iterator.hasNext()) {
             Character c = iterator.next();
             if (c.getName().equals(characterName)) {
-                iterator.remove(); // ITERATOR remove
+                iterator.remove();
                 System.out.println(characterName + " left the party!");
                 return true;
             }
@@ -63,9 +63,9 @@ class Party {
         return false;
     }
 
-    // ENHANCED FOR LOOP - search
+    // ENHANCED FOR - search
     public Character findMember(String name) {
-        for (Character c : members) { // ENHANCED FOR LOOP
+        for (Character c : members) {
             if (c.getName().equals(name)) {
                 return c;
             }
@@ -73,17 +73,17 @@ class Party {
         return null;
     }
 
-    // ArrayList method: SIZE
+    // ArrayList: SIZE
     public int getSize() {
-        return members.size(); // SIZE method
+        return members.size();
     }
 
-    // ArrayList method: ISEMPTY
+    // ArrayList: ISEMPTY
     public boolean isEmpty() {
-        return members.isEmpty(); // ISEMPTY method
+        return members.isEmpty();
     }
 
-    // ENHANCED FOR LOOP - display all
+    // ENHANCED FOR - display
     public void displayParty() {
         System.out.println("\n=== Party: " + partyName + " ===");
         if (isEmpty()) {
@@ -91,16 +91,19 @@ class Party {
             return;
         }
 
-        for (Character c : members) { // ENHANCED FOR LOOP
+        int index = 1;
+        for (Character c : members) {
+            System.out.print(index + ". ");
             c.displayInfo();
+            index++;
         }
         System.out.println("Members: " + getSize() + "/" + maxSize);
     }
 
-    // ENHANCED FOR LOOP - filter
+    // ENHANCED FOR - filter
     public ArrayList<Character> getAliveMembers() {
         ArrayList<Character> alive = new ArrayList<Character>();
-        for (Character c : members) { // ENHANCED FOR LOOP
+        for (Character c : members) {
             if (c.isAlive()) {
                 alive.add(c);
             }
@@ -108,10 +111,10 @@ class Party {
         return alive;
     }
 
-    // ENHANCED FOR LOOP - sum
+    // ENHANCED FOR - sum
     public int getTotalHealth() {
         int total = 0;
-        for (Character c : members) { // ENHANCED FOR LOOP
+        for (Character c : members) {
             total += c.getHealth();
         }
         return total;
