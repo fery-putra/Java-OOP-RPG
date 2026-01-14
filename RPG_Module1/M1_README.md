@@ -300,36 +300,37 @@ switch (skillNumber) {
 2. `default:` is optional (like final `else`)
 3. Can only switch on: int, char, String, enum
 
-### Example with Multiple Cases:
+### Interactive Switch Example from Code:
+
 ```java
-public void promoteRank(int level) {
-    switch (level) {
-        case 1:
-        case 2:
-        case 3:
-            rank = 'D';  // Levels 1-3 get rank D
-            break;
-        case 4:
-        case 5:
-        case 6:
-            rank = 'C';  // Levels 4-6 get rank C
-            break;
-        case 7:
-        case 8:
-            rank = 'B';  // Levels 7-8 get rank B
-            break;
-        case 9:
-            rank = 'A';  // Level 9 gets rank A
-            break;
-        case 10:
-            rank = 'S';  // Level 10 gets rank S
-            break;
-        default:
-            rank = 'F';  // Other levels get rank F
-            break;
-    }
+// User inputs which action to take in battle
+System.out.println("1. Attack");
+System.out.println("2. Use Skill");
+System.out.println("3. Rest");
+System.out.print("Choose action: ");
+int action = scanner.nextInt();  // User inputs their choice
+
+switch (action) {
+    case 1:
+        heroDamage = hero.attack();
+        System.out.println("You attack!");
+        break;
+    case 2:
+        System.out.print("Choose skill (1-3): ");
+        int skill = scanner.nextInt();  // Nested input!
+        hero.useSkill(skill);
+        break;
+    case 3:
+        hero.rest();
+        System.out.println("You rest!");
+        break;
+    default:
+        System.out.println("Invalid! Turn skipped.");
+        break;
 }
 ```
+
+**This makes the game interactive!** User controls the battle flow.
 
 ---
 
