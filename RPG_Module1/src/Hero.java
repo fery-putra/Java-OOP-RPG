@@ -1,5 +1,5 @@
 
-//Class, Method, Input, Output, Data Type, Condition, Switch Case, Loop
+// Class, Method, Input, Output, Data Type, Condition, Switch Case, Loop
 
 public class Hero {
     // Attributes with different data types
@@ -53,11 +53,11 @@ public class Hero {
                 System.out.println(name + " uses SLASH! Damage: 20");
                 break;
             case 2:
-                System.out.println(name + " uses FIREBALL! Damage: 30");
                 if (mana >= 15) {
+                    System.out.println(name + " uses FIREBALL! Damage: 30");
                     mana -= 15;
                 } else {
-                    System.out.println("Not enough mana!");
+                    System.out.println("Not enough mana for Fireball!");
                 }
                 break;
             case 3:
@@ -94,10 +94,10 @@ public class Hero {
     }
 
     // Method using WHILE LOOP
-    public void practice() {
+    public void practice(int times) {
         System.out.println("\n" + name + " is practicing...");
         int attackCount = 1;
-        while (attackCount <= 5) {
+        while (attackCount <= times) {
             int damage = (int)attackPower;
             System.out.println("Training attack " + attackCount + ": " + damage + " damage");
             attackCount++;
@@ -134,3 +134,5 @@ public class Hero {
         System.out.println(name + " has been promoted to rank " + rank);
     }
 }
+
+
