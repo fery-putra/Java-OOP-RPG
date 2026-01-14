@@ -1,6 +1,9 @@
-
+// MODULE 3: COMPLETE SOLUTION WITH USER INPUT
 // Inheritance, Constructor, Overriding and Overloading
 
+import java.util.Scanner;
+
+// ==================== Character.java (BASE CLASS) ====================
 public class Character {
     private String name;
     private int health;
@@ -61,5 +64,6 @@ public class Character {
         return health > 0;
     }
 }
+
 
 

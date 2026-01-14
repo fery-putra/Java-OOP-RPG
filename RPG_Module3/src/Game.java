@@ -1,127 +1,173 @@
+import java.util.Scanner;
+
 class Game {
-public static void main(String[] args) {
-    System.out.println("=== RPG Game - Module 3 ===");
-    System.out.println("Learn: Inheritance, Constructor, Overriding, Overloading\n");
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-    // Test INHERITANCE and CONSTRUCTOR
-    System.out.println("=== Testing Constructors & Inheritance ===\n");
+        System.out.println("=== RPG Game - Module 3 ===");
+        System.out.println("Learn: Inheritance, Constructor, Overriding, Overloading\n");
 
-    // Different constructor versions
-    Warrior warrior1 = new Warrior("Thorin");
-    System.out.println();
+        // Test INHERITANCE and CONSTRUCTOR with INPUT
+        System.out.println("=== Character Creation ===");
+        System.out.println("Choose character type:");
+        System.out.println("1. Warrior");
+        System.out.println("2. Mage");
+        System.out.println("3. Archer");
+        System.out.print("Your choice: ");
+        int charType = scanner.nextInt();
+        scanner.nextLine(); // Clear buffer
 
-    Warrior warrior2 = new Warrior("Gimli", 35);
-    System.out.println();
+        Character player = null;
+        System.out.print("Enter character name: ");
+        String playerName = scanner.nextLine();
 
-    Warrior warrior3 = new Warrior("Boromir", 30, 130);
-    System.out.println();
-
-    Mage mage1 = new Mage("Gandalf");
-    System.out.println();
-
-    Mage mage2 = new Mage("Saruman", 150);
-    System.out.println();
-
-    Archer archer1 = new Archer("Legolas");
-    System.out.println();
-
-    Archer archer2 = new Archer("Robin", 30);
-    System.out.println();
-
-    // Display all characters
-    System.out.println("\n=== All Characters ===");
-    warrior1.displayInfo();
-    System.out.println();
-    warrior2.displayInfo();
-    System.out.println();
-    mage1.displayInfo();
-    System.out.println();
-    archer1.displayInfo();
-    System.out.println();
-
-    // Test METHOD OVERRIDING - attack()
-    System.out.println("=== Testing Method Overriding (Damage) ===");
-    System.out.println("Base Character attack: 10");
-    System.out.println("Warrior attack (overridden): " + warrior1.attack());
-    System.out.println("Mage attack with mana (overridden): " + mage1.attack());
-    System.out.println("Archer attack (overridden): " + archer1.attack());
-
-    // Test METHOD OVERLOADING - attack(Character)
-    System.out.println("\n=== Testing Method Overloading ===");
-    System.out.println("Warrior attacks Mage:");
-    warrior1.attack(mage1);
-    System.out.println();
-
-    System.out.println("Mage attacks Warrior:");
-    mage1.attack(warrior1);
-    System.out.println();
-
-    System.out.println("Archer aims and attacks:");
-    archer1.aim();
-    archer1.attack(warrior1);
-    System.out.println();
-
-    // Test OVERRIDDEN takeDamage
-    System.out.println("=== Testing Overridden takeDamage ===");
-    Mage enemy = new Mage("Dark Wizard");
-    System.out.println("\nWarrior takes damage (with armor reduction):");
-    warrior1.takeDamage(30);
-
-    System.out.println("\nMage takes damage (no armor):");
-    enemy.takeDamage(30);
-    System.out.println();
-
-    // Demonstrate INHERITANCE hierarchy
-    System.out.println("=== Demonstrating Inheritance Hierarchy ===");
-    Character[] party = {warrior1, mage2, archer1};
-    System.out.println("All inherit from Character class:");
-    for (Character c : party) {
-        c.displayInfo(); // Polymorphic call
-        System.out.println();
-    }
-
-    // Test unique methods (not inherited)
-    System.out.println("=== Unique Class Methods ===");
-    warrior1.shieldBash(enemy);
-    System.out.println();
-
-    mage1.restoreMana(50);
-    System.out.println();
-
-    // Battle simulation
-    System.out.println("=== Battle Simulation ===");
-    Warrior hero = new Warrior("Hero", 40);
-    Mage boss = new Mage("Evil Sorcerer", 90, 120);
-
-    System.out.println("\nBattle Start!");
-    hero.displayInfo();
-    System.out.println();
-    boss.displayInfo();
-    System.out.println();
-
-    int round = 1;
-    while (hero.isAlive() && boss.isAlive() && round <= 5) {
-        System.out.println("--- Round " + round + " ---");
-        hero.attack(boss);
-        if (boss.isAlive()) {
-            System.out.println();
-            boss.attack(hero);
+        switch (charType) {
+            case 1:
+                System.out.print("Use default armor? (yes/no): ");
+                String useDefault = scanner.nextLine();
+                if (useDefault.equalsIgnoreCase("yes")) {
+                    player = new Warrior(playerName);
+                } else {
+                    System.out.print("Enter custom armor (10-50): ");
+                    int customArmor = scanner.nextInt();
+                    player = new Warrior(playerName, customArmor);
+                }
+                break;
+            case 2:
+                System.out.print("Use default mana? (yes/no): ");
+                String useManaDefault = scanner.nextLine();
+                if (useManaDefault.equalsIgnoreCase("yes")) {
+                    player = new Mage(playerName);
+                } else {
+                    System.out.print("Enter custom mana (50-150): ");
+                    int customMana = scanner.nextInt();
+                    player = new Mage(playerName, customMana);
+                }
+                break;
+            case 3:
+                System.out.print("Use default arrows? (yes/no): ");
+                String useArrowDefault = scanner.nextLine();
+                if (useArrowDefault.equalsIgnoreCase("yes")) {
+                    player = new Archer(playerName);
+                } else {
+                    System.out.print("Enter custom arrows (10-40): ");
+                    int customArrows = scanner.nextInt();
+                    player = new Archer(playerName, customArrows);
+                }
+                break;
+            default:
+                System.out.println("Invalid choice! Creating default Warrior.");
+                player = new Warrior(playerName);
         }
-        System.out.println();
-        round++;
-    }
 
-    System.out.println("Battle End!");
-    hero.displayInfo();
-    System.out.println();
-    boss.displayInfo();
+        System.out.println("\n=== Your Character ===");
+        player.displayInfo();
 
-    if (hero.isAlive() && !boss.isAlive()) {
-        System.out.println("\n✓ " + hero.getName() + " is victorious!");
-    } else if (!hero.isAlive() && boss.isAlive()) {
-        System.out.println("\n✗ " + boss.getName() + " wins!");
-    } else {
-        System.out.println("\nBattle continues...");
+        // Create enemy with INPUT
+        System.out.println("\n=== Create Enemy ===");
+        System.out.println("Choose enemy type:");
+        System.out.println("1. Warrior");
+        System.out.println("2. Mage");
+        System.out.println("3. Archer");
+        System.out.print("Your choice: ");
+        int enemyType = scanner.nextInt();
+        scanner.nextLine(); // Clear buffer
+
+        Character enemy = null;
+        System.out.print("Enter enemy name: ");
+        String enemyName = scanner.nextLine();
+
+        switch (enemyType) {
+            case 1:
+                enemy = new Warrior(enemyName);
+                break;
+            case 2:
+                enemy = new Mage(enemyName);
+                break;
+            case 3:
+                enemy = new Archer(enemyName);
+                break;
+            default:
+                enemy = new Warrior(enemyName);
+        }
+
+        System.out.println("\n=== Enemy Created ===");
+        enemy.displayInfo();
+
+        // Battle simulation with INPUT
+        System.out.println("\n=== Battle Start ===");
+        System.out.print("Start battle? (yes/no): ");
+        String startBattle = scanner.nextLine();
+
+        if (startBattle.equalsIgnoreCase("yes")) {
+            int round = 1;
+            while (player.isAlive() && enemy.isAlive() && round <= 10) {
+                System.out.println("\n--- Round " + round + " ---");
+                System.out.println("Your turn!");
+                System.out.println("1. Normal Attack");
+                System.out.println("2. Special Action");
+                System.out.println("3. View Stats");
+                System.out.print("Choose action: ");
+                int action = scanner.nextInt();
+
+                switch (action) {
+                    case 1:
+                        player.attack(enemy);
+                        break;
+                    case 2:
+                        // Special actions based on class
+                        if (player instanceof Warrior) {
+                            ((Warrior)player).shieldBash(enemy);
+                        } else if (player instanceof Mage) {
+                            System.out.print("Enter mana to restore: ");
+                            int manaAmt = scanner.nextInt();
+                            ((Mage)player).restoreMana(manaAmt);
+                        } else if (player instanceof Archer) {
+                            ((Archer)player).aim();
+                            System.out.println("Next attack will be critical!");
+                        }
+                        break;
+                    case 3:
+                        System.out.println("\n=== Current Stats ===");
+                        player.displayInfo();
+                        enemy.displayInfo();
+                        continue; // Don't let enemy attack
+                    default:
+                        System.out.println("Invalid action!");
+                }
+
+                if (!enemy.isAlive()) {
+                    System.out.println("\n" + enemy.getName() + " has been defeated!");
+                    break;
+                }
+
+                // Enemy attacks
+                System.out.println("\nEnemy's turn:");
+                enemy.attack(player);
+
+                if (!player.isAlive()) {
+                    System.out.println("\n" + player.getName() + " has been defeated!");
+                    break;
+                }
+
+                round++;
+            }
+
+            System.out.println("\n=== Battle End ===");
+            if (player.isAlive() && !enemy.isAlive()) {
+                System.out.println("✓ VICTORY! " + player.getName() + " wins!");
+            } else if (!player.isAlive() && enemy.isAlive()) {
+                System.out.println("✗ DEFEAT! " + enemy.getName() + " wins!");
+            } else {
+                System.out.println("Battle timeout or draw!");
+            }
+        }
+
+        // Final stats
+        System.out.println("\n=== Final Stats ===");
+        player.displayInfo();
+        enemy.displayInfo();
+
+        scanner.close();
     }
-}
 }
