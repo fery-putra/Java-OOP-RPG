@@ -370,7 +370,13 @@ public void takeDamage(int damage) {
 
 ## 📘 4. METHOD OVERLOADING vs OVERRIDING
 
-This is confusing for students! Here's the difference:
+### 🧠 Vocabulary Check: Overloading vs. Overriding
+These two terms sound similar but do very different things!
+
+* **Overriding (What we did here!):** Changing the behavior of an *inherited* method.
+    * *Example:* The base `Character` has an `attack()` method, but the `Mage` **overrides** it to shoot fireballs instead of punching. Same method name, same parameters, different behavior.
+* **Overloading:** Having multiple methods in the *same class* with the same name, but different parameters.
+    * *Example:* Having `attack()` (uses fists) and `attack(String weapon)` (uses a weapon). Same method name, different parameters.
 
 ### OVERLOADING
 - **Same class** (or inherited)

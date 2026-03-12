@@ -32,7 +32,7 @@ public class Hero {
 Hero hero = new Hero();  // 'hero' is an object of class Hero
 ```
 
-```markdown
+
 ### Visualizing Variables vs. Objects
 When you type `Hero hero = new Hero();`, two different things happen:
 
@@ -40,7 +40,7 @@ When you type `Hero hero = new Hero();`, two different things happen:
 2. `Hero hero` creates a **reference variable** (like the remote control).
 
 The `=` symbol links them together. The variable `hero` isn't the object itself; it's the remote control you use to interact with the object in memory! If you type `hero.attack()`, you are pressing the "attack" button on the remote control.
-```
+
 
 
 ---

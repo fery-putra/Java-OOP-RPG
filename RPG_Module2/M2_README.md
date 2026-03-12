@@ -20,6 +20,18 @@ public class Warrior {
 }
 ```
 
+### 🛡️ Access Modifier Cheat Sheet
+Think of access modifiers like security clearance levels for your variables and methods:
+
+| Modifier | Analogy | Who can see it? |
+| :--- | :--- | :--- |
+| `public` | A billboard | **Everyone.** Any class anywhere can access it. |
+| `private` | A secret diary | **Only this class.** No one else, not even child classes, can see it. |
+| `protected` | A family secret | **Family and neighbors.** Only this class, its child classes, and classes in the same package can see it. |
+
+*Best Practice:* Always make variables `private` by default, and only open them up (`public` getters/setters) if absolutely necessary!
+
+
 ### Visual Representation:
 
 ```

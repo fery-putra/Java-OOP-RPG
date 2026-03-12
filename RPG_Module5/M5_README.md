@@ -349,6 +349,13 @@ class InvalidTargetException extends Exception {
 ### What is ArrayList?
 **ArrayList** is a dynamic array that can grow and shrink. Unlike regular arrays, size is flexible!
 
+### 🎒 Why use ArrayList instead of a standard Array `[]`?
+
+* **Standard Array (`Item[]`) is like an Egg Carton:** When you create it, it has a fixed number of slots (e.g., exactly 12). You can't squeeze a 13th egg into it, and if you only have 2 eggs, you still have to carry the whole 12-slot carton around.
+* **`ArrayList<Item>` is like a Magic Shopping Bag:** It starts empty. When you put an item in, it grows. When you take an item out, it shrinks. You don't have to guess how many items you'll have ahead of time!
+
+Because RPG parties and inventories constantly change size as heroes join or items are looted, `ArrayList` is the perfect tool.
+
 ### Regular Array vs ArrayList:
 
 ```java
