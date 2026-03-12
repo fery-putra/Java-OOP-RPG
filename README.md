@@ -8,6 +8,36 @@
 
 This is a comprehensive Java programming tutorial project designed to teach Object-Oriented Programming (OOP) concepts through the development of a text-based RPG game. The project is structured into **5 progressive modules**, each building upon the previous one and introducing new Java concepts in an interactive, practical way.
 
+---
+
+## ⚠️ **CRITICAL: Module Independence**
+
+**Each module is a standalone, complete example. DO NOT mix files between modules!**
+
+### ❌ **WRONG - Do NOT Do This:**
+- Copying `Character.java` from Module 3 to Module 4
+- Using `Warrior.java` from Module 2 in Module 3
+- Mixing ArrayList code from Module 5 with Module 2
+- Importing classes from one module into another
+
+### ✅ **CORRECT - Do This:**
+- Each module has its OWN version of classes
+- Run each module independently in its own directory
+- Think of each module as a separate mini-project
+- Learn from one module, then move to the next
+
+### **Why Are Modules Independent?**
+
+Each module demonstrates **specific concepts** with purpose-built code:
+- **Module 3's `Character`** teaches inheritance with `super()`
+- **Module 5's `Character`** teaches exception handling with `throws`
+- **Module 2's `Warrior`** teaches encapsulation and getters/setters
+- **Module 4's `Warrior`** teaches abstract classes and interfaces
+
+They're **designed differently on purpose!** Mixing them defeats the learning objectives.
+
+---
+
 ### **Target Audience**
 - **Beginner Java programmers** learning OOP concepts
 - **Students** taking introductory programming courses

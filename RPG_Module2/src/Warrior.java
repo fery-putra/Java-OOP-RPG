@@ -1,9 +1,25 @@
-
-// Encapsulation (public, protected, private), Method Overloading, Getter/Setter, Static
+// ============================================================================
+// MODULE 2 VERSION - Warrior.java
+// ============================================================================
+// ⚠️ IMPORTANT: This file is specific to MODULE 2
+//
+// DO NOT mix this with files from other modules!
+// Each module is a standalone learning example with its own version of classes.
+//
+// Module 2 Focus: Encapsulation, Getter/Setter, Method Overloading, Static
+// ============================================================================
 
 import java.util.Scanner;
 
-// ==================== Warrior.java ====================
+/**
+ * Warrior class - MODULE 2 VERSION
+ *
+ * This version demonstrates:
+ * - ENCAPSULATION with private/protected/public
+ * - GETTER and SETTER methods
+ * - METHOD OVERLOADING (multiple attack methods)
+ * - STATIC variables and methods
+ */
 public class Warrior {
     // ENCAPSULATION - Different access modifiers
     private String name;              // PRIVATE - only accessible within this class

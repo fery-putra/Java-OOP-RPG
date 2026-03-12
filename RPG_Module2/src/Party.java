@@ -1,11 +1,33 @@
+// ============================================================================
+// MODULE 2 VERSION - Party.java
+// ============================================================================
+// ⚠️ IMPORTANT: This file is specific to MODULE 2
+//
+// DO NOT mix this with files from other modules!
+// Each module is a standalone learning example.
+//
+// Module 2 Focus: Using encapsulated Warrior objects in a Party
+// ============================================================================
+
+/**
+ * Party class - MODULE 2 VERSION
+ *
+ * This version demonstrates:
+ * - Storing multiple Warrior objects
+ * - METHOD OVERLOADING for addWarrior()
+ * - Using PRIVATE variables (warrior1, warrior2, warrior3)
+ *
+ * NOTE: We use 3 separate warrior variables here for simplicity.
+ * In Module 5, you'll learn ArrayList to store unlimited warriors!
+ */
 class Party {
-    // ENCAPSULATION
-    private Warrior warrior1;     // PRIVATE
+    // ENCAPSULATION - Different access modifiers demonstrated
+    private Warrior warrior1;     // PRIVATE - only accessible inside Party class
     private Warrior warrior2;     // PRIVATE
     private Warrior warrior3;     // PRIVATE
-    protected String partyName;   // PROTECTED
+    protected String partyName;   // PROTECTED - accessible in subclasses (learn in Module 3)
 
-    // STATIC attribute
+    // STATIC attribute - shared across all Party objects
     private static int totalParties = 0;
 
     // Constructor

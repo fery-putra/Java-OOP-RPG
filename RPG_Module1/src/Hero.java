@@ -44,6 +44,23 @@ public class Hero {
      * Why use 'this'? When parameter names match attribute names,
      * 'this.name' refers to the object's attribute, while 'name' refers
      * to the parameter.
+     *
+     * ============================================================
+     * LOOKING AHEAD TO MODULE 2: CONSTRUCTORS
+     * ============================================================
+     * Notice how we create a hero in 2 steps:
+     *   Hero hero = new Hero();              // Step 1: Create object
+     *   hero.setHeroData(name, health, mana); // Step 2: Initialize it
+     *
+     * In Module 2, you'll learn about CONSTRUCTORS - special methods
+     * that run automatically when you create an object with 'new'.
+     *
+     * With a constructor, you can do both steps in ONE line:
+     *   Warrior w = new Warrior(name);  // Create AND initialize!
+     *
+     * Constructors make code cleaner and ensure objects are always
+     * properly initialized. You'll learn how to create them in Module 2!
+     * ============================================================
      */
     public void setHeroData(String name, int health, int mana) {
         this.name = name;           // Store the parameter 'name' into the object's 'name' attribute

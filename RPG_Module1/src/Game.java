@@ -98,8 +98,38 @@ class Game {
         // FOR LOOP demonstration - resting
         // ====================================================================
         System.out.print("\nDo you want to rest? (yes/no): ");
-        scanner.nextLine();  // IMPORTANT: Clear the newline buffer after nextInt()
-        String restChoice = scanner.nextLine();
+
+        // ============================================================
+        // SCANNER BUFFER CLEARING (Very Common Beginner Issue!)
+        // ============================================================
+        // Problem: nextInt() reads the NUMBER but leaves the ENTER key (\n) in the buffer!
+        //
+        // What happens WITHOUT this line:
+        //   User types: 5[ENTER]
+        //   nextInt() reads: 5
+        //   Buffer still has: \n (the ENTER key leftover)
+        //   Next nextLine() immediately reads that \n as empty string ""
+        //   Result: Program skips asking for input!
+        //
+        // Solution: Call nextLine() ONCE to consume that leftover \n
+        //
+        // Visual flow:
+        //   User input:  5[ENTER]           → "5\n"
+        //   nextInt():   reads 5            → buffer has "\n"
+        //   nextLine():  reads "\n"         → buffer now empty ✓
+        //   nextLine():  waits for input    → now works correctly!
+        //
+        // Without the clearing line:
+        //   User input:  5[ENTER]           → "5\n"
+        //   nextInt():   reads 5            → buffer has "\n"
+        //   nextLine():  reads "\n" as ""   → restChoice becomes empty! ✗
+        //
+        // Remember: nextInt(), nextDouble() leave \n in buffer
+        //           nextLine() consumes everything including \n
+        // ============================================================
+        scanner.nextLine();  // Consume the leftover newline from nextInt()
+
+        String restChoice = scanner.nextLine();  // NOW this will work correctly!
 
         // CONDITION: Check user's choice
         if (restChoice.equalsIgnoreCase("yes")) {  // equalsIgnoreCase ignores case (YES, yes, Yes all work)

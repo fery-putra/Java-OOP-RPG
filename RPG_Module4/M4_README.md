@@ -500,6 +500,29 @@ An **interface** is a contract that says "any class implementing me MUST have th
 
 **Keyword:** `interface`, `implements`
 
+```markdown
+### Visual Representation: Class vs. Interface
+
+An interface is a contract (`Magical`), while an abstract class is a partial blueprint (`Combatant`). A class like `Mage` can use both at the same time:
+
+```text
+       «Interface»
+        Magical
+      +castSpell()
+      +getMana()
+           ▲
+           │ implements
+           │
+┌─────────────────────┐      extends     ┌─────────────────────┐
+│     Combatant       │◄─────────────────│       Mage          │
+│  (Abstract Class)   │                  │                     │
+│ -name               │                  │ -mana               │
+│ -health             │                  │ +attack()           │
+│ +displayStats()     │                  │ +castSpell()        │
+└─────────────────────┘                  └─────────────────────┘
+```
+
+
 ### In Our Code:
 
 ```java

@@ -1,10 +1,30 @@
+// ============================================================================
+// MODULE 3 VERSION - Archer.java (CHILD CLASS)
+// ============================================================================
+// ⚠️ IMPORTANT: This file is specific to MODULE 3
+//
+// This Archer class EXTENDS Character (inheritance)
+// Module 3 Focus: Inheritance, super(), Method Overriding
+// ============================================================================
+
+/**
+ * Archer class - MODULE 3 VERSION (CHILD CLASS)
+ *
+ * This class EXTENDS Character and adds ARROWS and AIMING mechanics.
+ *
+ * Demonstrates:
+ * - Inheritance from Character
+ * - super() constructor calls
+ * - Overriding with special logic (critical hits when aiming)
+ * - Archer-specific methods (aim())
+ */
 class Archer extends Character {
-    private int arrows;
-    private boolean isAiming;
+    private int arrows;        // Archer-specific attribute
+    private boolean isAiming;  // Archer-specific attribute
 
     // Constructor with name
     public Archer(String name) {
-        super(name, 100);
+        super(name, 100);  // SUPER() - calls Character constructor
         this.arrows = 20;
         this.isAiming = false;
         System.out.println("Archer constructor called - Arrows set to 20");

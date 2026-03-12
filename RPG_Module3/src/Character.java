@@ -1,9 +1,31 @@
-// MODULE 3: COMPLETE SOLUTION WITH USER INPUT
-// Inheritance, Constructor, Overriding and Overloading
+// ============================================================================
+// MODULE 3 VERSION - Character.java (BASE CLASS)
+// ============================================================================
+// ⚠️ IMPORTANT: This file is specific to MODULE 3
+//
+// DO NOT mix this with Character.java from Module 5!
+// Each module has its own version designed for specific learning goals.
+//
+// Module 3 Focus: Inheritance, Constructor, Method Overriding
+// ============================================================================
 
 import java.util.Scanner;
 
-// ==================== Character.java (BASE CLASS) ====================
+/**
+ * Character class - MODULE 3 VERSION (BASE/PARENT CLASS)
+ *
+ * This is the PARENT class that Warrior, Mage, and Archer will INHERIT from.
+ *
+ * Key concepts demonstrated:
+ * - CONSTRUCTOR with parameters
+ * - CONSTRUCTOR OVERLOADING (two constructors)
+ * - Protected methods that children can use
+ * - Methods that children will OVERRIDE
+ *
+ * Think of this as the "general blueprint" for all characters.
+ * Specific character types (Warrior, Mage, Archer) will extend this
+ * and add their own unique features.
+ */
 public class Character {
     private String name;
     private int health;

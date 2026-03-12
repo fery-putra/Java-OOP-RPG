@@ -1,9 +1,34 @@
+// ============================================================================
+// MODULE 3 VERSION - Warrior.java (CHILD CLASS)
+// ============================================================================
+// ⚠️ IMPORTANT: This file is specific to MODULE 3
+//
+// This Warrior class EXTENDS Character (inheritance)
+// It's different from Module 2's Warrior!
+//
+// Module 3 Focus: Inheritance, super(), Method Overriding
+// ============================================================================
+
+/**
+ * Warrior class - MODULE 3 VERSION (CHILD CLASS)
+ *
+ * This class EXTENDS (inherits from) Character.
+ * It inherits all of Character's attributes and methods,
+ * then adds its own unique feature: ARMOR
+ *
+ * Key concepts demonstrated:
+ * - EXTENDS keyword (inheritance)
+ * - SUPER() to call parent constructor
+ * - CONSTRUCTOR OVERLOADING (3 constructors)
+ * - METHOD OVERRIDING (@Override)
+ * - Calling parent methods with super.methodName()
+ */
 class Warrior extends Character {
-    private int armor;
+    private int armor;  // Warrior-specific attribute (not in parent)
 
     // Constructor with name - calls parent constructor
     public Warrior(String name) {
-        super(name, 150); // Call parent constructor with super()
+        super(name, 150); // SUPER() - calls Character's constructor
         this.armor = 25;
         System.out.println("Warrior constructor called - Armor set to 25");
     }

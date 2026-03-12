@@ -1,10 +1,30 @@
+// ============================================================================
+// MODULE 3 VERSION - Mage.java (CHILD CLASS)
+// ============================================================================
+// ⚠️ IMPORTANT: This file is specific to MODULE 3
+//
+// This Mage class EXTENDS Character (inheritance)
+// Module 3 Focus: Inheritance, super(), Method Overriding
+// ============================================================================
+
+/**
+ * Mage class - MODULE 3 VERSION (CHILD CLASS)
+ *
+ * This class EXTENDS Character and adds MANA for spellcasting.
+ *
+ * Demonstrates:
+ * - Inheritance from Character
+ * - super() constructor calls
+ * - Overriding attack() with mana-based logic
+ * - New methods specific to mages
+ */
 class Mage extends Character {
-    private int mana;
-    private int maxMana;
+    private int mana;      // Mage-specific attribute
+    private int maxMana;   // Mage-specific attribute
 
     // Constructor with name
     public Mage(String name) {
-        super(name, 80); // Call parent constructor
+        super(name, 80); // SUPER() - Mages have lower health (80 vs 100)
         this.maxMana = 100;
         this.mana = maxMana;
         System.out.println("Mage constructor called - Mana set to 100");

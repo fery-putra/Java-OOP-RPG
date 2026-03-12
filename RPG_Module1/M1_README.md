@@ -32,6 +32,17 @@ public class Hero {
 Hero hero = new Hero();  // 'hero' is an object of class Hero
 ```
 
+```markdown
+### Visualizing Variables vs. Objects
+When you type `Hero hero = new Hero();`, two different things happen:
+
+1. `new Hero()` builds the actual object in the computer's memory (like buying a real TV).
+2. `Hero hero` creates a **reference variable** (like the remote control).
+
+The `=` symbol links them together. The variable `hero` isn't the object itself; it's the remote control you use to interact with the object in memory! If you type `hero.attack()`, you are pressing the "attack" button on the remote control.
+```
+
+
 ---
 
 ## 📘 2. METHOD (Metode)
@@ -101,6 +112,24 @@ String heroName = scanner.nextLine();  // READ INPUT from user
 | `nextInt()` | Integer | 100 |
 | `nextDouble()` | Double | 15.5 |
 | `next()` | String (one word) | "Fire" |
+
+### ⚠️ The "Scanner Trap" (Common Beginner Bug)
+When you use `nextInt()` or `nextDouble()`, Java reads the number but leaves the "Enter" key press (newline) hanging in the system. If your next command is `nextLine()`, Java reads that leftover "Enter" and skips your input!
+
+**How to fix it:** Add a blank `scanner.nextLine()` to "eat" the leftover Enter key.
+
+```java
+System.out.print("Enter age: ");
+int age = scanner.nextInt();
+
+// Add this to consume the leftover "Enter" key!
+scanner.nextLine(); 
+
+System.out.print("Enter name: ");
+String name = scanner.nextLine(); // Now this works perfectly
+```
+
+
 
 ### Example Flow:
 ```
